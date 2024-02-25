@@ -19,7 +19,9 @@ dependencies:
   riverpod_annotation: null
   separated_row: ^3.0.3
   envied: ^0.5.3
-
+  flextras: ^1.0.0
+  custom_refresh_indicator: ^3.0.0
+  
 dev_dependencies:
   build_runner: ^2.4.8
   envied_generator: ^0.5.3
