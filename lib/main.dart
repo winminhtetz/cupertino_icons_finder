@@ -24,8 +24,9 @@ class MyApp extends StatelessWidget {
       title: 'Ios Icon Finder',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
+        fontFamily: 'Gelion',
         useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
       ),
       home: const HomePage(),
     );

@@ -15,9 +15,7 @@ class TitleComponent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         AppTitle(),
-        IconSearchBar(
-          onChanged: onSearch,
-        ),
+        IconSearchBar(onChanged: onSearch),
       ],
     );
   }

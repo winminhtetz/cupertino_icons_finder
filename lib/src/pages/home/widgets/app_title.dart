@@ -10,7 +10,7 @@ class AppTitle extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('IOS Icon Finder', style: header),
+        Text('CupertinoIcons Finder', style: header),
         Text(
           'Please search the name of icon',
           style: body.copyWith(color: silver),

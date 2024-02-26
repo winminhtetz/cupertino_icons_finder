@@ -21,15 +21,10 @@ class IconList extends StatelessWidget {
           size: 20,
         );
       },
-      child: GridView.builder(
+      child: ListView.builder(
         shrinkWrap: true,
         itemCount: icons.length,
         padding: EdgeInsets.symmetric(vertical: 10),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            crossAxisSpacing: 12,
-            mainAxisSpacing: 8,
-            childAspectRatio: 1 / 1.1),
         itemBuilder: (context, index) {
           IosIcon icon = icons[index];
           return IconCard(icon: icon);
