@@ -20,11 +20,9 @@ class FavIconsPage extends ConsumerWidget {
         centerTitle: true,
       ),
       body: favIcons.isEmpty
-          ? Center(
-              child: EmptyUI(
-                icon: CupertinoIcons.heart_slash,
-                message: 'No Favorite Icons Found!',
-              ),
+          ? EmptyUI(
+              icon: CupertinoIcons.heart_slash,
+              message: 'No Favorite Icons Found!',
             )
           : ListView.separated(
               separatorBuilder: (_, __) => SizedBox(height: 8),

@@ -11,9 +11,11 @@ class BodyComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (icons.isEmpty) {
-      return EmptyUI(
-        message: 'No Match Found!',
-        icon: CupertinoIcons.search,
+      return Expanded(
+        child: EmptyUI(
+          message: 'No Match Found!',
+          icon: CupertinoIcons.search,
+        ),
       );
     }
     return Expanded(child: IconList(icons: icons));
