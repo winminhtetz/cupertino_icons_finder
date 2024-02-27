@@ -1,17 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ios_icon_finder/src/global/theme/app_color.dart';
 
-class CopyBtn extends StatelessWidget {
-  const CopyBtn({super.key, required this.onCopy});
+class RactIconBtn extends StatelessWidget {
+  const RactIconBtn({super.key, required this.onPressed, required this.icon});
 
-  final VoidCallback onCopy;
+  final IconData icon;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: onCopy,
-      icon: Icon(CupertinoIcons.doc, size: 14),
+      onPressed: onPressed,
+      icon: Icon(icon, size: 14),
       style: ButtonStyle(
         shape: MaterialStatePropertyAll(
           RoundedRectangleBorder(

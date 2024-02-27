@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ios_icon_finder/services/ios%20_icons/models/ios_icon_model.dart';
+import 'package:ios_icon_finder/src/pages/home/widgets/empty_ui.dart';
 import 'package:ios_icon_finder/src/pages/home/widgets/icon_list.dart';
 
 class BodyComponent extends StatelessWidget {
@@ -9,6 +10,7 @@ class BodyComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (icons.isEmpty) return EmptyUI();
     return Expanded(child: IconList(icons: icons));
   }
 }

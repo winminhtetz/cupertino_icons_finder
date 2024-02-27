@@ -6,7 +6,7 @@ part of 'ios_icon_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$iosIconHash() => r'5470b458bd7e20dc7f898d6ed69c293b43c0c7b0';
+String _$iosIconHash() => r'f8193dd96e16107d65fae73fdd28e4abc51351bf';
 
 /// Copied from Dart SDK
 class _SystemHash {

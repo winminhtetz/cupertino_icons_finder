@@ -1,10 +1,11 @@
 import 'package:flextras/flextras.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ios_icon_finder/services/ios%20_icons/models/ios_icon_model.dart';
 import 'package:ios_icon_finder/src/global/theme/app_color.dart';
 import 'package:ios_icon_finder/src/global/util/show_snackbar.dart';
-import 'package:ios_icon_finder/src/pages/home/widgets/icon_card/copy_btn.dart';
+import 'package:ios_icon_finder/src/pages/home/widgets/icon_card/ract_icon_btn.dart';
 import 'package:ios_icon_finder/src/pages/home/widgets/icon_card/icon_info.dart';
 import 'package:ios_icon_finder/src/pages/home/widgets/icon_card/icon_ui.dart';
 
@@ -28,11 +29,18 @@ class _IconCardState extends State<IconCard> {
         borderRadius: BorderRadius.circular(8),
       ),
       child: SeparatedRow(
-        separatorBuilder: () => SizedBox(width: 14),
+        separatorBuilder: () => SizedBox(width: 8),
         children: [
           IconUI(icon: widget.icon),
           IconInfo(icon: widget.icon),
-          CopyBtn(onCopy: () => onCopy(context))
+          RactIconBtn(
+            onPressed: () => onCopy(context),
+            icon: CupertinoIcons.doc,
+          ),
+          RactIconBtn(
+            onPressed: () => onFavorite(context),
+            icon: CupertinoIcons.heart,
+          ),
         ],
       ),
     );
@@ -44,4 +52,6 @@ class _IconCardState extends State<IconCard> {
     if (!context.mounted) return;
     context.showSnackBar("Copied \"$iconName\" to clipboard 🥳!");
   }
+
+  onFavorite(BuildContext context) {}
 }

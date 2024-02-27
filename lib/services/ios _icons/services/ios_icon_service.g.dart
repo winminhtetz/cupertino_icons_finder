@@ -6,7 +6,7 @@ part of 'ios_icon_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$iosIconServiceHash() => r'abd724b421d35af1e6fbcee833759d4bec3046dc';
+String _$iosIconServiceHash() => r'957930748fcf2f4b733f6f207b00df2139b1e0b7';
 
 /// See also [IosIconService].
 @ProviderFor(IosIconService)

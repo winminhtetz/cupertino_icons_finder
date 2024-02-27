@@ -16,9 +16,10 @@ class IconList extends ConsumerWidget {
     return DecoratedBox(
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
       child: LiquidPullToRefresh(
-        color: bombay,
+        height: 60,
+        color: coconut,
         animSpeedFactor: 2,
-        backgroundColor: silver,
+        backgroundColor: mineShaft,
         showChildOpacityTransition: false,
         springAnimationDurationInMilliseconds: 800,
         onRefresh: () => ref.refresh(iosIconServiceProvider.future),

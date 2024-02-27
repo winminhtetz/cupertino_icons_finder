@@ -21,6 +21,7 @@ class TitleComponent extends StatelessWidget {
       children: [
         AppTitle(onRefresh: onRefresh),
         IconSearchBar(onChanged: onSearch),
+        SizedBox(height: 1),
       ],
     );
   }

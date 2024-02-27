@@ -16,14 +16,14 @@ class AppTitle extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('CupertinoIcons Finder', style: header),
+            Text('Cupertino Icons Finder', style: header),
             Text(
               'Made with ❤️ by BadazzHarry',
               style: body.copyWith(color: silver),
             )
           ],
         ),
-        IconButton(onPressed: onRefresh, icon: Icon(CupertinoIcons.refresh)),
+        IconButton(onPressed: onRefresh, icon: Icon(CupertinoIcons.heart_fill)),
       ],
     );
   }
