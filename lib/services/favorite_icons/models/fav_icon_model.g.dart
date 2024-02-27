@@ -17,18 +17,21 @@ class FavIconAdapter extends TypeAdapter<FavIcon> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return FavIcon(
-      icon: fields[1] as IosIcon,
+      iconCode: fields[1] as int,
+      iconName: fields[2] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, FavIcon obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.icon);
+      ..write(obj.iconCode)
+      ..writeByte(2)
+      ..write(obj.iconName);
   }
 
   @override

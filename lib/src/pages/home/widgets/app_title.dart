@@ -4,9 +4,9 @@ import 'package:ios_icon_finder/src/global/theme/app_color.dart';
 import 'package:ios_icon_finder/src/global/theme/text_style.dart';
 
 class AppTitle extends StatelessWidget {
-  const AppTitle({super.key, required this.onRefresh});
+  const AppTitle({super.key, required this.onShowFav});
 
-  final VoidCallback onRefresh;
+  final VoidCallback onShowFav;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,12 @@ class AppTitle extends StatelessWidget {
             )
           ],
         ),
-        IconButton(onPressed: onRefresh, icon: Icon(CupertinoIcons.heart_fill)),
+        IconButton(
+            onPressed: onShowFav,
+            icon: Icon(
+              CupertinoIcons.heart_fill,
+              color: Colors.red,
+            )),
       ],
     );
   }

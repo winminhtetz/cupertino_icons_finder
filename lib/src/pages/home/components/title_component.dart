@@ -7,11 +7,11 @@ class TitleComponent extends StatelessWidget {
   const TitleComponent({
     super.key,
     required this.onSearch,
-    required this.onRefresh,
+    required this.onShowFav,
   });
 
   final ValueChanged<String> onSearch;
-  final VoidCallback onRefresh;
+  final VoidCallback onShowFav;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class TitleComponent extends StatelessWidget {
       separatorBuilder: () => SizedBox(height: 8),
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AppTitle(onRefresh: onRefresh),
+        AppTitle(onShowFav: onShowFav),
         IconSearchBar(onChanged: onSearch),
         SizedBox(height: 1),
       ],
