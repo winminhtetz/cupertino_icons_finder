@@ -11,11 +11,9 @@ List<IosIcon> iosIcon(IosIconRef ref, String q) {
   final iosIcons = ref.watch(iosIconServiceProvider);
 
   iosIcons.whenData((value) => icons = value);
-
   if (query.isEmpty) {
     return icons;
   }
-
   icons = icons.where((e) => e.iconName.contains(query)).toList();
   return icons;
 }

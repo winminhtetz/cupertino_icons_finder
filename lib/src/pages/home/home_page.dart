@@ -26,13 +26,11 @@ class HomePage extends HookConsumerWidget {
         child: Column(
           children: [
             TitleComponent(
-              onSearch: (value) => query.value = value,
+              onSearch: (input) => onSearch(input, query),
+              onRefresh: () => ref.refresh(iosIconServiceProvider.future),
             ),
             switch (data) {
-              AsyncData() => BodyComponent(
-                  icons: iosIcons,
-                  onRefresh: ref.refresh(iosIconServiceProvider.future),
-                ),
+              AsyncData() => BodyComponent(icons: iosIcons),
               AsyncError() => ErrorUI(
                   onPressed: () => ref.refresh(iosIconServiceProvider.future),
                 ),
@@ -42,5 +40,9 @@ class HomePage extends HookConsumerWidget {
         ),
       ),
     );
+  }
+
+  void onSearch(String value, ValueNotifier<String> query) {
+    query.value = value;
   }
 }

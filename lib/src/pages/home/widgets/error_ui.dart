@@ -9,13 +9,23 @@ class ErrorUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: SeparatedColumn(
-        separatorBuilder: () => SizedBox(height: 8),
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('An Error occured!', style: body.copyWith(color: Colors.red)),
-          TextButton(onPressed: onPressed, child: Text('Refresh'))
-        ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: SeparatedColumn(
+          separatorBuilder: () => SizedBox(height: 8),
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Unable to connect to the internet',
+                style: body.copyWith(color: Colors.red)),
+            Text(
+                'Can\'t display the icons because your device isn\'t connected to the internet.',
+                style: bodySmall.copyWith(color: Colors.black)),
+            Align(
+                alignment: Alignment.center,
+                child: TextButton(onPressed: onPressed, child: Text('Refresh')))
+          ],
+        ),
       ),
     );
   }

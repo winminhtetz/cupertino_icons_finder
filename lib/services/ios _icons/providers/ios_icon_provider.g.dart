@@ -6,7 +6,7 @@ part of 'ios_icon_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$iosIconHash() => r'149389199464bdb685c1055d0f80f848c7e45a2e';
+String _$iosIconHash() => r'5470b458bd7e20dc7f898d6ed69c293b43c0c7b0';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -40,10 +40,10 @@ class IosIconFamily extends Family<List<IosIcon>> {
 
   /// See also [iosIcon].
   IosIconProvider call(
-    String qurey,
+    String q,
   ) {
     return IosIconProvider(
-      qurey,
+      q,
     );
   }
 
@@ -52,7 +52,7 @@ class IosIconFamily extends Family<List<IosIcon>> {
     covariant IosIconProvider provider,
   ) {
     return call(
-      provider.qurey,
+      provider.q,
     );
   }
 
@@ -75,11 +75,11 @@ class IosIconFamily extends Family<List<IosIcon>> {
 class IosIconProvider extends AutoDisposeProvider<List<IosIcon>> {
   /// See also [iosIcon].
   IosIconProvider(
-    String qurey,
+    String q,
   ) : this._internal(
           (ref) => iosIcon(
             ref as IosIconRef,
-            qurey,
+            q,
           ),
           from: iosIconProvider,
           name: r'iosIconProvider',
@@ -89,7 +89,7 @@ class IosIconProvider extends AutoDisposeProvider<List<IosIcon>> {
                   : _$iosIconHash,
           dependencies: IosIconFamily._dependencies,
           allTransitiveDependencies: IosIconFamily._allTransitiveDependencies,
-          qurey: qurey,
+          q: q,
         );
 
   IosIconProvider._internal(
@@ -99,10 +99,10 @@ class IosIconProvider extends AutoDisposeProvider<List<IosIcon>> {
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.qurey,
+    required this.q,
   }) : super.internal();
 
-  final String qurey;
+  final String q;
 
   @override
   Override overrideWith(
@@ -117,7 +117,7 @@ class IosIconProvider extends AutoDisposeProvider<List<IosIcon>> {
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        qurey: qurey,
+        q: q,
       ),
     );
   }
@@ -129,21 +129,21 @@ class IosIconProvider extends AutoDisposeProvider<List<IosIcon>> {
 
   @override
   bool operator ==(Object other) {
-    return other is IosIconProvider && other.qurey == qurey;
+    return other is IosIconProvider && other.q == q;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, qurey.hashCode);
+    hash = _SystemHash.combine(hash, q.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
 mixin IosIconRef on AutoDisposeProviderRef<List<IosIcon>> {
-  /// The parameter `qurey` of this provider.
-  String get qurey;
+  /// The parameter `q` of this provider.
+  String get q;
 }
 
 class _IosIconProviderElement extends AutoDisposeProviderElement<List<IosIcon>>
@@ -151,7 +151,7 @@ class _IosIconProviderElement extends AutoDisposeProviderElement<List<IosIcon>>
   _IosIconProviderElement(super.provider);
 
   @override
-  String get qurey => (origin as IosIconProvider).qurey;
+  String get q => (origin as IosIconProvider).q;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
