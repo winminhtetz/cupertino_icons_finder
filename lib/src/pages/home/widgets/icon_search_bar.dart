@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:ios_icon_finder/src/global/constant/app_text.dart';
 import 'package:ios_icon_finder/src/global/theme/app_color.dart';
 
 class IconSearchBar extends HookWidget {
@@ -28,7 +29,9 @@ class IconSearchBar extends HookWidget {
       decoration: InputDecoration(
         filled: true,
         isDense: true,
+        hintText: hintText,
         fillColor: Colors.white,
+        contentPadding: EdgeInsets.all(10),
         suffixIcon: Opacity(
           opacity: (isEmpty) ? 0.4 : 1,
           child: IconButton(
@@ -36,8 +39,6 @@ class IconSearchBar extends HookWidget {
             icon: Icon(CupertinoIcons.clear),
           ),
         ),
-        contentPadding: EdgeInsets.all(10),
-        hintText: 'Please search the name of icon',
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: bombay),

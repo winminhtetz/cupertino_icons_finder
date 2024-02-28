@@ -20,56 +20,40 @@ class IconCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final favIcons = ref.watch(favIconsServiceProvider);
-    bool isFavorited = favIcons
-        .where((e) => e.iconCode == int.tryParse(icon.iconCode))
-        .isNotEmpty;
+    bool isFav = favIcons.where((e) => _checkEqual(e)).isNotEmpty;
+    final reactIcon = isFav ? CupertinoIcons.heart_fill : CupertinoIcons.heart;
+
     return AnimatedItemAction(
-      duration: Duration(milliseconds: 400),
       backgroundColor: Colors.white,
+      duration: Duration(milliseconds: 400),
       startActions: [
-        RactIconBtn(
-          onPressed: () => onCopy(context),
-          icon: CupertinoIcons.doc,
-        ),
+        RactIconBtn(onPressed: () => onCopy(context), icon: CupertinoIcons.doc)
       ],
       endActions: [
         RactIconBtn(
-          onPressed: () {
-            if (isFavorited) {
-              onRemovedFav(context, ref);
-              return;
-            }
-            onFavorite(context, ref);
-          },
-          icon: isFavorited ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
+          icon: reactIcon,
+          iconColor: isFav ? Colors.red : null,
+          onPressed: () => onReactChanged(context, ref, isFav),
         ),
       ],
-      builder: (context, isSelected) => Padding(
+      builder: (_, __) => Padding(
         padding: EdgeInsets.all(14),
         child: SeparatedRow(
           separatorBuilder: () => SizedBox(width: 8),
           children: [
             IconUI(icon: icon),
             IconInfo(icon: icon),
-            // RactIconBtn(
-            //   onPressed: () => onCopy(context),
-            //   icon: CupertinoIcons.doc,
-            // ),
-            // RactIconBtn(
-            //   onPressed: () {
-            //     if (isFavorited) {
-            //       onRemovedFav(context, ref);
-            //       return;
-            //     }
-            //     onFavorite(context, ref);
-            //   },
-            //   icon:
-            //       isFavorited ? CupertinoIcons.heart_fill : CupertinoIcons.heart,
-            // ),
           ],
         ),
       ),
     );
+  }
+
+  bool _checkEqual(FavIcon e) {
+    int code = int.parse(icon.iconCode);
+    bool conditionOne = e.iconCode == code;
+    bool conditionTwo = e.iconName.contains(icon.iconName);
+    return conditionOne && conditionTwo;
   }
 
   Future<void> onCopy(BuildContext context) async {
@@ -79,7 +63,12 @@ class IconCard extends ConsumerWidget {
     context.showSnackBar("Copied \"$iconName\" to clipboard 🥳!");
   }
 
-  onFavorite(BuildContext context, WidgetRef ref) {
+  void onReactChanged(context, ref, isFav) {
+    if (isFav) return onRemovedFav(context, ref);
+    onFavorite(context, ref);
+  }
+
+  void onFavorite(BuildContext context, WidgetRef ref) {
     var favIcon = FavIcon(
       iconName: icon.iconName,
       iconCode: int.parse(icon.iconCode),
