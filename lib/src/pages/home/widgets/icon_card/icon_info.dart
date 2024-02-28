@@ -16,6 +16,8 @@ class IconInfo extends StatelessWidget {
         children: [
           Text(
             icon.iconName,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: body.copyWith(fontWeight: FontWeight.bold),
           ),
           Text(icon.iconFont, style: bodySmall),
