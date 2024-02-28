@@ -77,7 +77,6 @@ class IconCard extends ConsumerWidget {
   }
 
   void onRemovedFav(BuildContext context, WidgetRef ref) {
-    var iconCode = int.parse(icon.iconCode);
-    ref.read(favIconsServiceProvider.notifier).deleteFavorite(iconCode);
+    ref.read(favIconsServiceProvider.notifier).deleteFavorite(icon.iconName);
   }
 }

@@ -15,9 +15,14 @@ class FavIconRepo {
     return _hive.values.toList();
   }
 
-  List<FavIcon> removeFromFavorite(int iconCode) {
+  List<FavIcon> removeFromFavorite(String name) {
     List<FavIcon> icons = _hive.values.toList();
-    _hive.deleteAt(icons.indexWhere((e) => e.iconCode == iconCode));
+    _hive.deleteAt(icons.indexWhere((e) => e.iconName.contains(name)));
+    return _hive.values.toList();
+  }
+
+  List<FavIcon> removeAll() {
+    _hive.clear();
     return _hive.values.toList();
   }
 }

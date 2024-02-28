@@ -17,7 +17,11 @@ class FavIconsService extends _$FavIconsService {
     state = repo.addToFavorite(icon);
   }
 
-  void deleteFavorite(int iconCode) {
-    state = repo.removeFromFavorite(iconCode);
+  void deleteFavorite(String name) {
+    state = repo.removeFromFavorite(name);
+  }
+
+  void deleteAll() {
+    state = repo.removeAll();
   }
 }

@@ -21,6 +21,12 @@ class FavIconsPage extends ConsumerWidget {
         centerTitle: true,
         backgroundColor: coconut,
         title: Text(favIconsList),
+        // actions: [
+        //   IconButton(
+        //     onPressed: () => onRemoveAll(ref),
+        //     icon: Icon(CupertinoIcons.delete),
+        //   )
+        // ],
       ),
       body: favIcons.isEmpty
           ? EmptyUI(icon: CupertinoIcons.heart_slash, message: favNotFound)
@@ -40,5 +46,9 @@ class FavIconsPage extends ConsumerWidget {
               },
             ),
     );
+  }
+
+  onRemoveAll(WidgetRef ref) {
+    ref.read(favIconsServiceProvider.notifier).deleteAll();
   }
 }
