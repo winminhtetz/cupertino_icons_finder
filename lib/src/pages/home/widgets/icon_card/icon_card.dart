@@ -25,7 +25,7 @@ class IconCard extends ConsumerWidget {
 
     return AnimatedItemAction(
       backgroundColor: Colors.white,
-      duration: Duration(milliseconds: 400),
+      duration: Duration(milliseconds: 300),
       startActions: [
         RactIconBtn(onPressed: () => onCopy(context), icon: CupertinoIcons.doc)
       ],
