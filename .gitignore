@@ -30,8 +30,13 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
-/.env
-/lib/services/env/
+
+# Ignore environment files
+.env
+
+# Ignore environment-related folders
+.env/
+lib/services/env/
 
 # Symbolication related
 app.*.symbols
