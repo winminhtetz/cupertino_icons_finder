@@ -35,7 +35,6 @@ migrate_working_dir/
 .env
 
 # Ignore environment-related folders
-.env/
 lib/services/env/
 
 # Symbolication related
