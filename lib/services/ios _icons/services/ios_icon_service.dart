@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 part 'ios_icon_service.g.dart';
 
 
-@riverpod
+@Riverpod(keepAlive: true)
 class IosIconService extends _$IosIconService {
   @override
   Future<List<IosIcon>> build() async {

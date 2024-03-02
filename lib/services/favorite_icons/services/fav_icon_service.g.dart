@@ -6,7 +6,7 @@ part of 'fav_icon_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$favIconsServiceHash() => r'111d40f1c1115a6a02b92fda299e39006debd6b5';
+String _$favIconsServiceHash() => r'602337fcc69e0886229bb9360e270b7d5b71baf7';
 
 /// See also [FavIconsService].
 @ProviderFor(FavIconsService)

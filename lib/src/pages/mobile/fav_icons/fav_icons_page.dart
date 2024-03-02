@@ -7,7 +7,7 @@ import 'package:ios_icon_finder/services/ios%20_icons/models/ios_icon_model.dart
 import 'package:ios_icon_finder/src/global/constant/app_text.dart';
 import 'package:ios_icon_finder/src/global/theme/app_color.dart';
 import 'package:ios_icon_finder/src/global/widgets/empty_ui.dart';
-import 'package:ios_icon_finder/src/pages/home/widgets/icon_card/icon_card.dart';
+import 'package:ios_icon_finder/src/pages/mobile/home/widgets/icon_card/icon_card.dart';
 
 class FavIconsPage extends ConsumerWidget {
   const FavIconsPage({super.key});

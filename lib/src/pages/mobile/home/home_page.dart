@@ -4,11 +4,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ios_icon_finder/services/ios%20_icons/providers/ios_icon_provider.dart';
 import 'package:ios_icon_finder/services/ios%20_icons/services/ios_icon_service.dart';
 import 'package:ios_icon_finder/src/global/theme/app_color.dart';
-import 'package:ios_icon_finder/src/pages/fav_icons/fav_icons_page.dart';
-import 'package:ios_icon_finder/src/pages/home/components/body_component.dart';
-import 'package:ios_icon_finder/src/pages/home/components/title_component.dart';
-import 'package:ios_icon_finder/src/pages/home/widgets/error_ui.dart';
-import 'package:ios_icon_finder/src/pages/home/widgets/loading.dart';
+import 'package:ios_icon_finder/src/pages/mobile/fav_icons/fav_icons_page.dart';
+import 'package:ios_icon_finder/src/pages/mobile/home/components/body_component.dart';
+import 'package:ios_icon_finder/src/pages/mobile/home/components/title_component.dart';
+import 'package:ios_icon_finder/src/pages/mobile/home/widgets/error_ui.dart';
+import 'package:ios_icon_finder/src/pages/mobile/home/widgets/loading.dart';
 
 class HomePage extends HookConsumerWidget {
   const HomePage({super.key});

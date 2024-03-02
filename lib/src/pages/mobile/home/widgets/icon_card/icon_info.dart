@@ -12,7 +12,7 @@ class IconInfo extends StatelessWidget {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             icon.iconName,
@@ -20,7 +20,12 @@ class IconInfo extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: body.copyWith(fontWeight: FontWeight.bold),
           ),
-          Text(icon.iconFont, style: bodySmall),
+          Text(
+            icon.iconFont,
+            style: bodySmall,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
         ],
       ),
     );

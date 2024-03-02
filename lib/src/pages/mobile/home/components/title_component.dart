@@ -1,7 +1,7 @@
 import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
-import 'package:ios_icon_finder/src/pages/home/widgets/app_title.dart';
-import 'package:ios_icon_finder/src/pages/home/widgets/icon_search_bar.dart';
+import 'package:ios_icon_finder/src/pages/mobile/home/widgets/app_title.dart';
+import 'package:ios_icon_finder/src/pages/mobile/home/widgets/icon_search_bar.dart';
 
 class TitleComponent extends StatelessWidget {
   const TitleComponent({

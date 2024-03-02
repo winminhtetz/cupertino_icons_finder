@@ -8,14 +8,15 @@ import 'package:ios_icon_finder/services/favorite_icons/models/fav_icon_model.da
 import 'package:ios_icon_finder/services/favorite_icons/services/fav_icon_service.dart';
 import 'package:ios_icon_finder/services/ios%20_icons/models/ios_icon_model.dart';
 import 'package:ios_icon_finder/src/global/util/show_snackbar.dart';
-import 'package:ios_icon_finder/src/pages/home/widgets/icon_card/ract_icon_btn.dart';
-import 'package:ios_icon_finder/src/pages/home/widgets/icon_card/icon_info.dart';
-import 'package:ios_icon_finder/src/pages/home/widgets/icon_card/icon_ui.dart';
+import 'package:ios_icon_finder/src/pages/mobile/home/widgets/icon_card/ract_icon_btn.dart';
+import 'package:ios_icon_finder/src/pages/mobile/home/widgets/icon_card/icon_info.dart';
+import 'package:ios_icon_finder/src/pages/mobile/home/widgets/icon_card/icon_ui.dart';
 
 class IconCard extends ConsumerWidget {
-  const IconCard({super.key, required this.icon});
+  const IconCard({super.key, required this.icon, this.rightToActions = false});
 
   final IosIcon icon;
+  final bool rightToActions;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,9 +28,16 @@ class IconCard extends ConsumerWidget {
       backgroundColor: Colors.white,
       duration: Duration(milliseconds: 300),
       startActions: [
-        RactIconBtn(onPressed: () => onCopy(context), icon: CupertinoIcons.doc)
+        if (!rightToActions)
+          RactIconBtn(
+              onPressed: () => onCopy(context), icon: CupertinoIcons.doc)
       ],
       endActions: [
+        if (rightToActions)
+          RactIconBtn(
+            onPressed: () => onCopy(context),
+            icon: CupertinoIcons.doc,
+          ),
         RactIconBtn(
           icon: reactIcon,
           iconColor: isFav ? Colors.red : null,
