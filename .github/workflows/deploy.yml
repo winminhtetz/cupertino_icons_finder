@@ -1,0 +1,35 @@
+name: Build and Deploy to Output Repo
+
+on:
+  push:
+    branches:
+      - main # Change this to your default branch name
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Flutter Project
+        uses: actions/checkout@v4
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+
+      - name: Build Web
+        run: |
+          flutter pub get
+          flutter build web --release
+
+      - name: Deploy to Output Repo
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.GH_TOKEN }}
+        with:
+          source-directory: "build/web"
+          destination-github-username: "winminhtetz"
+          destination-repository-name: "cupertino_icons_finder_web"
+          user-email: "mgwinnminnhtet111@gmail.com"
+          target-branch: main
