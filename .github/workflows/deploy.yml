@@ -23,13 +23,16 @@ jobs:
           echo "API=${{ secrets.ENV_API_KEY }}" > .env
 
       - name: Generate Envied Code
+        # FIX 1: Using 'upgrade' prevents the frontend_server.dart.snapshot error
         run: |
-          flutter pub run build_runner build --delete-conflicting-outputs
+          flutter pub upgrade
+          dart run build_runner build --delete-conflicting-outputs
 
       - name: Build Web
+        # FIX 2: Added base-href so GitHub Pages can locate your Javascript and CSS
         run: |
           flutter pub get
-          flutter build web --release
+          flutter build web --release --base-href "/cupertino_icons_finder_web/"
 
       - name: Deploy to Output Repo
         uses: cpina/github-action-push-to-another-repository@main
