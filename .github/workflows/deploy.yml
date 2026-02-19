@@ -22,6 +22,20 @@ jobs:
         run: |
           echo "API=${{ secrets.ENV_API_KEY }}" > .env
 
+      - name: Create env source file
+        run: |
+          mkdir -p lib/services/env
+          cat > lib/services/env/m_env.dart << 'EOF'
+          import 'package:envied/envied.dart';
+          part 'm_env.g.dart';
+
+          @Envied(path: '.env')
+          abstract class Env {
+            @EnviedField(varName: 'API')
+            static const String api = _Env.api;
+          }
+          EOF
+
       - name: Generate Envied Code
         # FIX 1: Using 'upgrade' prevents the frontend_server.dart.snapshot error
         run: |
