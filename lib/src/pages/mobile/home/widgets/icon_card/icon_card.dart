@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ios_icon_finder/services/favorite_icons/models/fav_icon_model.dart';
 import 'package:ios_icon_finder/services/favorite_icons/services/fav_icon_service.dart';
-import 'package:ios_icon_finder/services/ios%20_icons/models/ios_icon_model.dart';
+import 'package:ios_icon_finder/services/ios_icons/models/ios_icon_model.dart';
 import 'package:ios_icon_finder/src/global/util/show_snackbar.dart';
 import 'package:ios_icon_finder/src/pages/mobile/home/widgets/icon_card/ract_icon_btn.dart';
 import 'package:ios_icon_finder/src/pages/mobile/home/widgets/icon_card/icon_info.dart';

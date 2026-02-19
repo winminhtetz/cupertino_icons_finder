@@ -9,8 +9,8 @@ import 'package:ios_icon_finder/services/categories/models/icon_category_model.d
 import 'package:ios_icon_finder/services/categories/services/icon_category_service.dart';
 import 'package:ios_icon_finder/services/favorite_icons/models/fav_icon_model.dart';
 import 'package:ios_icon_finder/services/favorite_icons/services/fav_icon_service.dart';
-import 'package:ios_icon_finder/services/ios%20_icons/models/ios_icon_model.dart';
-import 'package:ios_icon_finder/services/ios%20_icons/services/ios_icon_service.dart';
+import 'package:ios_icon_finder/services/ios_icons/models/ios_icon_model.dart';
+import 'package:ios_icon_finder/services/ios_icons/services/ios_icon_service.dart';
 import 'package:ios_icon_finder/src/global/util/show_snackbar.dart';
 import 'package:ios_icon_finder/src/pages/mobile/fav_icons/fav_icons_page.dart';
 

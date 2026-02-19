@@ -1,5 +1,5 @@
-import 'package:ios_icon_finder/services/ios%20_icons/models/ios_icon_model.dart';
-import 'package:ios_icon_finder/services/ios%20_icons/services/ios_icon_service.dart';
+import 'package:ios_icon_finder/services/ios_icons/models/ios_icon_model.dart';
+import 'package:ios_icon_finder/services/ios_icons/services/ios_icon_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'ios_icon_provider.g.dart';

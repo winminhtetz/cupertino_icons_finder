@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ios_icon_finder/services/ios%20_icons/models/ios_icon_model.dart';
+import 'package:ios_icon_finder/services/ios_icons/models/ios_icon_model.dart';
 import 'package:ios_icon_finder/src/global/theme/text_style.dart';
 
 class IconInfo extends StatelessWidget {

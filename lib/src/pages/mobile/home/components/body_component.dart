@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:ios_icon_finder/services/ios%20_icons/models/ios_icon_model.dart';
+import 'package:ios_icon_finder/services/ios_icons/models/ios_icon_model.dart';
 import 'package:ios_icon_finder/src/global/constant/app_text.dart';
 import 'package:ios_icon_finder/src/global/widgets/empty_ui.dart';
 import 'package:ios_icon_finder/src/pages/mobile/home/widgets/icon_list.dart';

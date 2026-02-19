@@ -1,5 +1,5 @@
 import 'package:ios_icon_finder/services/env/m_env.dart';
-import 'package:ios_icon_finder/services/ios%20_icons/models/ios_icon_model.dart';
+import 'package:ios_icon_finder/services/ios_icons/models/ios_icon_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:http/http.dart' as http;
 

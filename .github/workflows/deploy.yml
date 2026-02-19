@@ -18,6 +18,14 @@ jobs:
         with:
           channel: "stable"
 
+      - name: Create .env file
+        run: |
+          echo "API=${{ secrets.ENV_API_KEY }}" > .env
+
+      - name: Generate Envied Code
+        run: |
+          flutter pub run build_runner build --delete-conflicting-outputs
+
       - name: Build Web
         run: |
           flutter pub get

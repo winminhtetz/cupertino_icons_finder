@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:ios_icon_finder/services/ios%20_icons/models/ios_icon_model.dart';
-import 'package:ios_icon_finder/services/ios%20_icons/services/ios_icon_service.dart';
+import 'package:ios_icon_finder/services/ios_icons/models/ios_icon_model.dart';
+import 'package:ios_icon_finder/services/ios_icons/services/ios_icon_service.dart';
 import 'package:ios_icon_finder/src/global/extensions/responsive_extension.dart';
 import 'package:ios_icon_finder/src/global/theme/app_color.dart';
 import 'package:ios_icon_finder/src/pages/mobile/home/widgets/icon_card/icon_card.dart';
