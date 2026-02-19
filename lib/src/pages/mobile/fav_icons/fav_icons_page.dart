@@ -18,6 +18,7 @@ const Color _dividerColor = Color(0xFFD7E0EA);
 
 class FavIconsPage extends ConsumerWidget {
   const FavIconsPage({super.key});
+  // TODO: Add option to export favorites as JSON or text file for backup/sharing
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
