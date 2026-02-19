@@ -1,30 +1,40 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
+import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
 
 import 'package:ios_icon_finder/main.dart';
+import 'package:ios_icon_finder/services/favorite_icons/models/fav_icon_model.dart';
+import 'package:ios_icon_finder/src/pages/mobile/home/home_page.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  late Directory hiveDir;
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  setUpAll(() async {
+    hiveDir = await Directory.systemTemp.createTemp('ios_icon_finder_test_');
+    Hive.init(hiveDir.path);
+    if (!Hive.isAdapterRegistered(1)) {
+      Hive.registerAdapter(FavIconAdapter());
+    }
+    await Hive.openBox<FavIcon>('favorite_icons');
+  });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+  tearDownAll(() async {
+    if (Hive.isBoxOpen('favorite_icons')) {
+      await Hive.box<FavIcon>('favorite_icons').clear();
+    }
+    await Hive.close();
+    if (await hiveDir.exists()) {
+      await hiveDir.delete(recursive: true);
+    }
+  });
+
+  testWidgets('App boots to home page', (WidgetTester tester) async {
+    await tester.pumpWidget(const ProviderScope(child: MyApp()));
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.byType(MyApp), findsOneWidget);
+    expect(find.byType(HomePage), findsOneWidget);
   });
 }

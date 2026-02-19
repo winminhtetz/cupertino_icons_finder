@@ -19,7 +19,7 @@ class RactIconBtn extends StatelessWidget {
       icon: Icon(icon, size: 20, color: iconColor),
       style: ButtonStyle(
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        padding: MaterialStatePropertyAll(EdgeInsets.zero),
+        padding: WidgetStatePropertyAll(EdgeInsets.zero),
       ),
     );
   }

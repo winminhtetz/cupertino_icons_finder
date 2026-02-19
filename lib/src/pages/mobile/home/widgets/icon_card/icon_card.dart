@@ -58,7 +58,7 @@ class IconCard extends ConsumerWidget {
   }
 
   bool _checkEqual(FavIcon e) {
-    int code = int.parse(icon.iconCode);
+    int code = icon.codePoint;
     bool conditionOne = e.iconCode == code;
     bool conditionTwo = e.iconName.contains(icon.iconName);
     return conditionOne && conditionTwo;
@@ -79,7 +79,7 @@ class IconCard extends ConsumerWidget {
   void onFavorite(BuildContext context, WidgetRef ref) {
     var favIcon = FavIcon(
       iconName: icon.iconName,
-      iconCode: int.parse(icon.iconCode),
+      iconCode: icon.codePoint,
     );
     ref.read(favIconsServiceProvider.notifier).addToFavorite(favIcon);
   }

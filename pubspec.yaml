@@ -29,7 +29,6 @@ dependencies:
   envied: ^0.5.3
   flextras: ^1.0.0
   separated_row: ^3.0.3
-  device_preview: ^1.1.0
   liquid_pull_to_refresh: ^3.0.1
 
   # local storage

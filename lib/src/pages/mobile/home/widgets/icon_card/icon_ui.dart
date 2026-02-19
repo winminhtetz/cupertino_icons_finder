@@ -19,10 +19,10 @@ class IconUI extends StatelessWidget {
       ),
       child: Icon(
         IconData(
-          int.parse(icon.iconCode),
+          icon.codePoint,
           matchTextDirection: true,
           fontFamily: icon.iconFont,
-          fontPackage: CupertinoIcons.iconFontPackage,
+          fontPackage: icon.iconFontPackage ?? CupertinoIcons.iconFontPackage,
         ),
         color: Colors.black,
       ),
