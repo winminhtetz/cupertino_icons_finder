@@ -46,7 +46,7 @@ jobs:
         # FIX 2: Added base-href so GitHub Pages can locate your Javascript and CSS
         run: |
           flutter pub get
-          flutter build web --release --base-href "/cupertino_icons_finder_web/"
+          flutter build web --release --base-href "/cupertino_icons_finder_web/" --no-tree-shake-icons
 
       - name: Deploy to Output Repo
         uses: cpina/github-action-push-to-another-repository@main
