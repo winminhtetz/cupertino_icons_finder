@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- iOS meta tags & icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="Cupertino Icons Finder" />
+    <link rel="apple-touch-icon" href="icons/Icon-192.png" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png" />
+
+    <meta name="application-name" content="Cupertino Icons Finder" />
+    <meta
+      name="description"
+      content="Search and browse Cupertino icons for iOS and Flutter apps."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0175C2" />
+    <link rel="canonical" href="https://cupertino-icons-finder.pages.dev/" />
+
+    <meta property="og:title" content="Cupertino Icons Finder" />
+    <meta
+      property="og:description"
+      content="Search and browse Cupertino icons for iOS and Flutter apps."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://cupertino-icons-finder.pages.dev/"
+    />
+    <meta property="og:site_name" content="Cupertino Icons Finder" />
+    <meta property="og:image" content="icons/Icon-512.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Cupertino Icons Finder" />
+    <meta
+      name="twitter:description"
+      content="Search and browse Cupertino icons for iOS and Flutter apps."
+    />
+    <meta name="twitter:image" content="icons/Icon-512.png" />
+    <meta
+      name="twitter:site"
+      content="https://cupertino-icons-finder.pages.dev/"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Cupertino Icons Finder",
+        "url": "https://cupertino-icons-finder.pages.dev/",
+        "description": "Search and browse Cupertino icons for iOS and Flutter apps."
+      }
+    </script>
+
+    <title>Cupertino Icons Finder</title>
+    <link rel="manifest" href="manifest.json" />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+
+    <script>
+      // The value below is injected by flutter build, do not touch.
+      const serviceWorkerVersion = "1619251996";
+    </script>
+    <!-- This script adds the flutter initialization JS code -->
+    <script src="flutter.js" defer></script>
+  </head>
+  <body>
+    <div class="center">
+      <div class="sk-chase">
+        <div class="sk-chase-dot"></div>
+        <div class="sk-chase-dot"></div>
+        <div class="sk-chase-dot"></div>
+        <div class="sk-chase-dot"></div>
+        <div class="sk-chase-dot"></div>
+        <div class="sk-chase-dot"></div>
+      </div>
+    </div>
+
+    <script defer>
+      window.addEventListener("load", function (ev) {
+        // Download main.dart.js
+        _flutter.loader.loadEntrypoint({
+          serviceWorker: {
+            serviceWorkerVersion: serviceWorkerVersion,
+          },
+          onEntrypointLoaded: function (engineInitializer) {
+            engineInitializer.initializeEngine().then(function (appRunner) {
+              appRunner.runApp();
+            });
+          },
+        });
+      });
+    </script>
+  </body>
+</html>

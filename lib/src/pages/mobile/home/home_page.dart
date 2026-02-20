@@ -11,18 +11,10 @@ import 'package:ios_icon_finder/services/favorite_icons/models/fav_icon_model.da
 import 'package:ios_icon_finder/services/favorite_icons/services/fav_icon_service.dart';
 import 'package:ios_icon_finder/services/ios_icons/models/ios_icon_model.dart';
 import 'package:ios_icon_finder/services/ios_icons/services/ios_icon_service.dart';
+import 'package:ios_icon_finder/src/global/theme/app_theme.dart';
+import 'package:ios_icon_finder/src/global/theme/theme_provider.dart';
 import 'package:ios_icon_finder/src/global/util/show_snackbar.dart';
 import 'package:ios_icon_finder/src/pages/mobile/fav_icons/fav_icons_page.dart';
-
-const Color _appCanvas = Color(0xFFE8EEF4);
-const Color _shellSurface = Color(0xFFF8FBFF);
-const Color _toolbarSurface = Color(0xFFF2F7FD);
-const Color _dividerColor = Color(0xFFD7E0EA);
-const Color _tileColor = Color(0xFFEEF4FB);
-const Color _textPrimary = Color(0xFF1F2B37);
-const Color _textMuted = Color(0xFF6D7C8D);
-const Color _accentColor = Color(0xFF2A8BF2);
-const Color _selectedSurface = Color(0xFFE9F2FF);
 
 class HomePage extends HookConsumerWidget {
   const HomePage({super.key});
@@ -56,14 +48,18 @@ class HomePage extends HookConsumerWidget {
       categoryId: selectedCategoryId.value,
     );
 
+    final colors = context.appColors;
     return Scaffold(
-      backgroundColor: _appCanvas,
+      backgroundColor: colors.appCanvas,
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFFF2F7FC), Color(0xFFE1E9F2)],
+            colors: [
+              colors.backgroundGradientTop,
+              colors.backgroundGradientBottom
+            ],
           ),
         ),
         child: SafeArea(
@@ -102,7 +98,7 @@ class HomePage extends HookConsumerWidget {
               }
 
               return Container(
-                color: _shellSurface,
+                color: colors.shellSurface,
                 child: Column(
                   children: [
                     _TopToolbar(
@@ -175,7 +171,7 @@ class HomePage extends HookConsumerWidget {
   }
 }
 
-class _TopToolbar extends StatelessWidget {
+class _TopToolbar extends ConsumerWidget {
   const _TopToolbar({
     required this.compact,
     required this.controller,
@@ -195,52 +191,80 @@ class _TopToolbar extends StatelessWidget {
   final VoidCallback onRefreshAll;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final colors = context.appColors;
+    final themeMode = ref.watch(themeModeProvider);
+    final isDark = themeMode == ThemeMode.dark ||
+        (themeMode == ThemeMode.system &&
+            MediaQuery.platformBrightnessOf(context) == Brightness.dark);
+
+    void toggleTheme() => ref.read(themeModeProvider.notifier).toggle();
+
     return Container(
-      color: _toolbarSurface,
+      color: colors.toolbarSurface,
       padding:
           EdgeInsets.fromLTRB(compact ? 14 : 20, 14, compact ? 14 : 20, 14),
-      child: compact ? _buildCompact(context) : _buildDesktop(context),
+      child: compact
+          ? _buildCompact(context, colors, isDark, toggleTheme)
+          : _buildDesktop(context, colors, isDark, toggleTheme),
     );
   }
 
-  Widget _buildDesktop(BuildContext context) {
+  Widget _buildDesktop(BuildContext context, AppColors colors, bool isDark,
+      VoidCallback toggleTheme) {
     return Row(
       children: [
-        const _BrandHeader(),
+        _BrandHeader(colors: colors),
         const SizedBox(width: 24),
         Expanded(
           child: _SearchField(
             controller: controller,
             hasQuery: hasQuery,
             onClear: onClearQuery,
+            colors: colors,
           ),
         ),
         const SizedBox(width: 12),
         _ToolbarIconButton(
+          icon: isDark ? CupertinoIcons.sun_max : CupertinoIcons.moon,
+          onPressed: toggleTheme,
+          colors: colors,
+          tooltip: isDark ? 'Switch to light mode' : 'Switch to dark mode',
+        ),
+        _ToolbarIconButton(
           icon: CupertinoIcons.heart,
           onPressed: onOpenFavorites,
           badgeText: favoritesCount > 0 ? favoritesCount.toString() : null,
+          colors: colors,
         ),
       ],
     );
   }
 
-  Widget _buildCompact(BuildContext context) {
+  Widget _buildCompact(BuildContext context, AppColors colors, bool isDark,
+      VoidCallback toggleTheme) {
     return Column(
       children: [
         Row(
           children: [
-            const _BrandHeader(compact: true),
+            _BrandHeader(compact: true, colors: colors),
             const Spacer(),
+            _ToolbarIconButton(
+              icon: isDark ? CupertinoIcons.sun_max : CupertinoIcons.moon,
+              onPressed: toggleTheme,
+              colors: colors,
+              tooltip: isDark ? 'Light mode' : 'Dark mode',
+            ),
             _ToolbarIconButton(
               icon: CupertinoIcons.heart,
               onPressed: onOpenFavorites,
               badgeText: favoritesCount > 0 ? favoritesCount.toString() : null,
+              colors: colors,
             ),
             _ToolbarIconButton(
               icon: CupertinoIcons.refresh,
               onPressed: onRefreshAll,
+              colors: colors,
             ),
           ],
         ),
@@ -249,6 +273,7 @@ class _TopToolbar extends StatelessWidget {
           controller: controller,
           hasQuery: hasQuery,
           onClear: onClearQuery,
+          colors: colors,
         ),
       ],
     );
@@ -256,9 +281,10 @@ class _TopToolbar extends StatelessWidget {
 }
 
 class _BrandHeader extends StatelessWidget {
-  const _BrandHeader({this.compact = false});
+  const _BrandHeader({this.compact = false, required this.colors});
 
   final bool compact;
+  final AppColors colors;
 
   @override
   Widget build(BuildContext context) {
@@ -266,14 +292,14 @@ class _BrandHeader extends StatelessWidget {
       children: [
         Icon(
           CupertinoIcons.compass_fill,
-          color: _accentColor,
+          color: colors.accentColor,
           size: compact ? 18 : 22,
         ),
         SizedBox(width: compact ? 8 : 10),
         Text(
           'Cupertino Icons Finder',
           style: TextStyle(
-            color: _textPrimary,
+            color: colors.textPrimary,
             fontSize: compact ? 18 : 24,
             fontWeight: FontWeight.w800,
             letterSpacing: 0.1,
@@ -288,12 +314,16 @@ class _ToolbarIconButton extends StatelessWidget {
   const _ToolbarIconButton({
     required this.icon,
     required this.onPressed,
+    required this.colors,
     this.badgeText,
+    this.tooltip,
   });
 
   final IconData icon;
   final VoidCallback onPressed;
+  final AppColors colors;
   final String? badgeText;
+  final String? tooltip;
 
   @override
   Widget build(BuildContext context) {
@@ -305,7 +335,8 @@ class _ToolbarIconButton extends StatelessWidget {
           IconButton(
             onPressed: onPressed,
             splashRadius: 19,
-            icon: Icon(icon, color: _textPrimary, size: 19),
+            tooltip: tooltip,
+            icon: Icon(icon, color: colors.textPrimary, size: 19),
           ),
           if (badgeText != null)
             Positioned(
@@ -314,7 +345,7 @@ class _ToolbarIconButton extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                 decoration: BoxDecoration(
-                  color: _accentColor,
+                  color: colors.accentColor,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
@@ -338,31 +369,34 @@ class _SearchField extends StatelessWidget {
     required this.controller,
     required this.hasQuery,
     required this.onClear,
+    required this.colors,
   });
 
   final TextEditingController controller;
   final bool hasQuery;
   final VoidCallback onClear;
+  final AppColors colors;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
-      style: const TextStyle(fontSize: 15),
+      style: TextStyle(fontSize: 15, color: colors.textPrimary),
       decoration: InputDecoration(
         filled: true,
-        fillColor: const Color(0xFFFFFFFF),
+        fillColor: colors.tileColor,
         hintText: 'Find symbols, names, or category',
-        hintStyle: const TextStyle(
-          color: _textMuted,
+        hintStyle: TextStyle(
+          color: colors.textMuted,
           fontSize: 14,
         ),
         prefixIcon:
-            const Icon(CupertinoIcons.search, color: _textMuted, size: 18),
+            Icon(CupertinoIcons.search, color: colors.textMuted, size: 18),
         suffixIcon: hasQuery
             ? IconButton(
                 onPressed: onClear,
-                icon: const Icon(CupertinoIcons.clear_circled_solid, size: 18),
+                icon: Icon(CupertinoIcons.clear_circled_solid,
+                    size: 18, color: colors.textMuted),
               )
             : null,
         contentPadding:
@@ -409,6 +443,7 @@ class _DesktopLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Row(
       children: [
         SizedBox(
@@ -422,7 +457,7 @@ class _DesktopLayout extends StatelessWidget {
             onSelectCategory: onSelectCategory,
           ),
         ),
-        const VerticalDivider(width: 1, color: _dividerColor),
+        VerticalDivider(width: 1, color: colors.dividerColor),
         Expanded(
           child: _IconGridPane(
             iconsAsync: iconsAsync,
@@ -515,6 +550,7 @@ class _CategorySidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     final total =
         categoryCounts.values.fold<int>(0, (sum, count) => sum + count);
 
@@ -561,7 +597,7 @@ class _CategorySidebar extends StatelessWidget {
               ),
             ),
           ),
-          const Divider(height: 24, color: _dividerColor),
+          Divider(height: 24, color: colors.dividerColor),
           _DeveloperProfileCard(
             favoritesCount: favoritesCount,
           ),
@@ -588,13 +624,14 @@ class _CompactCategoryBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     final total =
         categoryCounts.values.fold<int>(0, (sum, count) => sum + count);
     return Container(
       height: 58,
       width: double.infinity,
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: _dividerColor)),
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: colors.dividerColor)),
       ),
       child: categoriesAsync.when(
         data: (_) => ListView(
@@ -642,6 +679,7 @@ class _CategoryChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Padding(
       padding: const EdgeInsets.only(right: 8),
       child: InkWell(
@@ -651,16 +689,17 @@ class _CategoryChip extends StatelessWidget {
           duration: const Duration(milliseconds: 200),
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
           decoration: BoxDecoration(
-            color: selected ? _accentColor : Colors.white,
+            color: selected ? colors.accentColor : colors.tileColor,
             borderRadius: BorderRadius.circular(22),
-            border: Border.all(color: selected ? _accentColor : _dividerColor),
+            border: Border.all(
+                color: selected ? colors.accentColor : colors.dividerColor),
           ),
           child: Text(
             label,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w700,
-              color: selected ? Colors.white : _textPrimary,
+              color: selected ? Colors.white : colors.textPrimary,
             ),
           ),
         ),
@@ -682,16 +721,17 @@ class _SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Row(
       children: [
-        Icon(icon, size: textSize <= 18 ? 16 : 18, color: _textPrimary),
+        Icon(icon, size: textSize <= 18 ? 16 : 18, color: colors.textPrimary),
         const SizedBox(width: 8),
         Text(
           title,
           style: TextStyle(
             fontSize: textSize,
             fontWeight: FontWeight.w800,
-            color: _textPrimary,
+            color: colors.textPrimary,
           ),
         ),
       ],
@@ -714,6 +754,7 @@ class _CategoryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -723,7 +764,7 @@ class _CategoryTile extends StatelessWidget {
           duration: const Duration(milliseconds: 220),
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           decoration: BoxDecoration(
-            color: selected ? Colors.white : Colors.transparent,
+            color: selected ? colors.tileColor : Colors.transparent,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
@@ -733,8 +774,8 @@ class _CategoryTile extends StatelessWidget {
                 height: 8,
                 decoration: BoxDecoration(
                   color: selected
-                      ? _accentColor
-                      : _textMuted.withValues(alpha: 0.45),
+                      ? colors.accentColor
+                      : colors.textMuted.withValues(alpha: 0.45),
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -742,8 +783,8 @@ class _CategoryTile extends StatelessWidget {
               Expanded(
                 child: Text(
                   name,
-                  style: const TextStyle(
-                    color: _textPrimary,
+                  style: TextStyle(
+                    color: colors.textPrimary,
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
                   ),
@@ -753,8 +794,8 @@ class _CategoryTile extends StatelessWidget {
               const SizedBox(width: 10),
               Text(
                 '$count',
-                style: const TextStyle(
-                  color: _textMuted,
+                style: TextStyle(
+                  color: colors.textMuted,
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
                 ),
@@ -781,16 +822,17 @@ class _DeveloperProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: _dividerColor),
-        gradient: const LinearGradient(
+        border: Border.all(color: colors.dividerColor),
+        gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFFF1F8FF), Color(0xFFEFFBF8)],
+          colors: [colors.cardGradientStart, colors.cardGradientEnd],
         ),
       ),
       child: Column(
@@ -802,20 +844,20 @@ class _DeveloperProfileCard extends StatelessWidget {
                 width: 42,
                 height: 42,
                 alignment: Alignment.center,
-                decoration: const BoxDecoration(
-                  color: Color(0xFFD9EBFF),
+                decoration: BoxDecoration(
+                  color: colors.avatarBg,
                   shape: BoxShape.circle,
                 ),
-                child: const Text(
+                child: Text(
                   'WM',
                   style: TextStyle(
-                    color: Color(0xFF0F4D84),
+                    color: colors.avatarFg,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
               ),
               const SizedBox(width: 10),
-              const Expanded(
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -824,18 +866,18 @@ class _DeveloperProfileCard extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        color: _textPrimary,
+                        color: colors.textPrimary,
                         fontSize: 14,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
-                    SizedBox(height: 2),
+                    const SizedBox(height: 2),
                     Text(
                       _role,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        color: _textMuted,
+                        color: colors.textMuted,
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
                       ),
@@ -846,10 +888,10 @@ class _DeveloperProfileCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-          const Text(
+          Text(
             'Need custom icon tooling or app support? Reach out fast:',
             style: TextStyle(
-              color: _textMuted,
+              color: colors.textMuted,
               fontSize: 12,
               fontWeight: FontWeight.w600,
               height: 1.25,
@@ -880,16 +922,16 @@ class _DeveloperProfileCard extends StatelessWidget {
           const SizedBox(height: 10),
           Row(
             children: [
-              const Icon(
+              Icon(
                 CupertinoIcons.heart_fill,
                 size: 13,
-                color: _accentColor,
+                color: colors.accentColor,
               ),
               const SizedBox(width: 6),
               Text(
                 'Saved icons: $favoritesCount',
-                style: const TextStyle(
-                  color: _textPrimary,
+                style: TextStyle(
+                  color: colors.textPrimary,
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
                 ),
@@ -927,6 +969,7 @@ class _ProfileAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -936,31 +979,31 @@ class _ProfileAction extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.88),
+            color: colors.profileActionBg,
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: _dividerColor),
+            border: Border.all(color: colors.dividerColor),
           ),
           child: Row(
             children: [
-              Icon(icon, size: 14, color: _accentColor),
+              Icon(icon, size: 14, color: colors.accentColor),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   '$label: $value',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    color: _textPrimary,
+                  style: TextStyle(
+                    color: colors.textPrimary,
                     fontSize: 12,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
               ),
               const SizedBox(width: 6),
-              const Icon(
+              Icon(
                 CupertinoIcons.doc_on_doc,
                 size: 13,
-                color: _textMuted,
+                color: colors.textMuted,
               ),
             ],
           ),
@@ -993,6 +1036,7 @@ class _IconGridPane extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     if (iconsAsync.isLoading && iconsAsync.valueOrNull == null) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -1028,7 +1072,7 @@ class _IconGridPane extends StatelessWidget {
       return Center(
         child: Text(
           'No icons found $extra',
-          style: const TextStyle(color: _textMuted, fontSize: 16),
+          style: TextStyle(color: colors.textMuted, fontSize: 16),
         ),
       );
     }
@@ -1091,6 +1135,7 @@ class _IconGridTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     final iconData = IconData(
       icon.codePoint,
       fontFamily: icon.iconFont,
@@ -1106,21 +1151,16 @@ class _IconGridTile extends StatelessWidget {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           decoration: BoxDecoration(
-            color: selected ? _selectedSurface : _tileColor,
+            color: selected ? colors.selectedSurface : colors.tileColor,
             borderRadius: BorderRadius.circular(18),
             border: Border.all(
-              color: selected ? _accentColor : const Color(0xFFDCE5EF),
+              color: selected ? colors.accentColor : colors.dividerColor,
               width: selected ? 1.7 : 1,
             ),
             boxShadow: [
-              BoxShadow(
-                color: Colors.white.withValues(alpha: 0.95),
-                blurRadius: 0,
-                offset: const Offset(0, 0),
-              ),
               if (selected)
                 BoxShadow(
-                  color: _accentColor.withValues(alpha: 0.22),
+                  color: colors.accentColor.withValues(alpha: 0.22),
                   blurRadius: 20,
                   offset: const Offset(0, 10),
                 ),
@@ -1133,7 +1173,7 @@ class _IconGridTile extends StatelessWidget {
                 right: 6,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.9),
+                    color: colors.shellSurface.withValues(alpha: 0.9),
                     borderRadius: BorderRadius.circular(18),
                   ),
                   child: IconButton(
@@ -1143,7 +1183,7 @@ class _IconGridTile extends StatelessWidget {
                       favorite
                           ? CupertinoIcons.bookmark_fill
                           : CupertinoIcons.bookmark,
-                      color: favorite ? _accentColor : _textMuted,
+                      color: favorite ? colors.accentColor : colors.textMuted,
                       size: 17,
                     ),
                   ),
@@ -1153,7 +1193,7 @@ class _IconGridTile extends StatelessWidget {
                 child: Icon(
                   iconData,
                   size: 36,
-                  color: const Color(0xFF4E6EA8),
+                  color: colors.iconTileColor,
                 ),
               ),
               Positioned(
@@ -1165,10 +1205,10 @@ class _IconGridTile extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w700,
-                    color: _textPrimary,
+                    color: colors.textPrimary,
                     letterSpacing: 0.2,
                   ),
                 ),

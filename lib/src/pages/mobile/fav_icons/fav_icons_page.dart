@@ -6,15 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ios_icon_finder/services/favorite_icons/models/fav_icon_model.dart';
 import 'package:ios_icon_finder/services/favorite_icons/services/fav_icon_service.dart';
+import 'package:ios_icon_finder/src/global/theme/app_theme.dart';
 import 'package:ios_icon_finder/src/global/util/show_snackbar.dart';
-
-const Color _pageBackground = Color(0xFFE8EEF4);
-const Color _pageSurface = Color(0xFFF8FBFF);
-const Color _cardColor = Color(0xFFEEF4FB);
-const Color _textPrimary = Color(0xFF1F2B37);
-const Color _textMuted = Color(0xFF6D7C8D);
-const Color _accentColor = Color(0xFF2A8BF2);
-const Color _dividerColor = Color(0xFFD7E0EA);
 
 class FavIconsPage extends ConsumerWidget {
   const FavIconsPage({super.key});
@@ -22,16 +15,20 @@ class FavIconsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final colors = context.appColors;
     final favIcons = ref.watch(favIconsServiceProvider);
 
     return Scaffold(
-      backgroundColor: _pageBackground,
+      backgroundColor: colors.appCanvas,
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFFF2F7FC), Color(0xFFE1E9F2)],
+            colors: [
+              colors.backgroundGradientTop,
+              colors.backgroundGradientBottom
+            ],
           ),
         ),
         child: SafeArea(
@@ -46,7 +43,7 @@ class FavIconsPage extends ConsumerWidget {
               ),
               Expanded(
                 child: Container(
-                  color: _pageSurface,
+                  color: colors.shellSurface,
                   padding: const EdgeInsets.fromLTRB(14, 10, 14, 14),
                   child: favIcons.isEmpty
                       ? const _EmptyFavoritesState()
@@ -96,6 +93,7 @@ class FavIconsPage extends ConsumerWidget {
     final shouldClear = await showDialog<bool>(
       context: context,
       builder: (context) {
+        final colors = context.appColors;
         return AlertDialog(
           title: const Text('Clear all favorites?'),
           content:
@@ -107,7 +105,8 @@ class FavIconsPage extends ConsumerWidget {
             ),
             FilledButton(
               onPressed: () => Navigator.pop(context, true),
-              style: FilledButton.styleFrom(backgroundColor: _accentColor),
+              style:
+                  FilledButton.styleFrom(backgroundColor: colors.accentColor),
               child: const Text('Clear'),
             ),
           ],
@@ -135,23 +134,24 @@ class _FavoritesHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Container(
-      color: const Color(0xFFF2F7FD),
+      color: colors.toolbarSurface,
       padding: const EdgeInsets.fromLTRB(10, 8, 12, 10),
       child: Row(
         children: [
           IconButton(
             onPressed: onBack,
-            icon: const Icon(CupertinoIcons.back, color: _textPrimary),
+            icon: Icon(CupertinoIcons.back, color: colors.textPrimary),
           ),
           const SizedBox(width: 2),
-          const Expanded(
+          Expanded(
             child: Text(
               'Favorite Icons',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                color: _textPrimary,
+                color: colors.textPrimary,
                 fontSize: 22,
                 fontWeight: FontWeight.w800,
               ),
@@ -160,14 +160,14 @@ class _FavoritesHeader extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: colors.tileColor,
               borderRadius: BorderRadius.circular(18),
-              border: Border.all(color: _dividerColor),
+              border: Border.all(color: colors.dividerColor),
             ),
             child: Text(
               '$count saved',
-              style: const TextStyle(
-                color: _textPrimary,
+              style: TextStyle(
+                color: colors.textPrimary,
                 fontSize: 12,
                 fontWeight: FontWeight.w700,
               ),
@@ -179,7 +179,7 @@ class _FavoritesHeader extends StatelessWidget {
             tooltip: 'Clear all',
             icon: Icon(
               CupertinoIcons.trash,
-              color: onClearAll == null ? _textMuted : _textPrimary,
+              color: onClearAll == null ? colors.textMuted : colors.textPrimary,
             ),
           ),
         ],
@@ -245,6 +245,7 @@ class _FavoriteTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     final iconData = IconData(
       favorite.iconCode,
       fontFamily: 'CupertinoIcons',
@@ -260,27 +261,27 @@ class _FavoriteTile extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
           decoration: BoxDecoration(
-            color: _cardColor,
+            color: colors.tileColor,
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: const Color(0xFFDCE5EF)),
+            border: Border.all(color: colors.dividerColor),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
-                  const Icon(
+                  Icon(
                     CupertinoIcons.heart_fill,
                     size: 14,
-                    color: _accentColor,
+                    color: colors.accentColor,
                   ),
                   const Spacer(),
                   IconButton(
                     onPressed: onRemove,
                     splashRadius: 16,
-                    icon: const Icon(
+                    icon: Icon(
                       CupertinoIcons.xmark_circle_fill,
-                      color: _textMuted,
+                      color: colors.textMuted,
                       size: 18,
                     ),
                   ),
@@ -291,7 +292,7 @@ class _FavoriteTile extends StatelessWidget {
                   child: Icon(
                     iconData,
                     size: 38,
-                    color: const Color(0xFF4E6EA8),
+                    color: colors.iconTileColor,
                   ),
                 ),
               ),
@@ -299,8 +300,8 @@ class _FavoriteTile extends StatelessWidget {
                 _toReadableName(favorite.iconName),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  color: _textPrimary,
+                style: TextStyle(
+                  color: colors.textPrimary,
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
                 ),
@@ -310,8 +311,8 @@ class _FavoriteTile extends StatelessWidget {
                 '0x$hexCode',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  color: _textMuted,
+                style: TextStyle(
+                  color: colors.textMuted,
                   fontSize: 11,
                   fontWeight: FontWeight.w600,
                 ),
@@ -329,34 +330,35 @@ class _EmptyFavoritesState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     return Center(
       child: Container(
         constraints: const BoxConstraints(maxWidth: 420),
         padding: const EdgeInsets.all(18),
         decoration: BoxDecoration(
-          color: Colors.white.withValues(alpha: 0.92),
+          color: colors.tileColor,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: _dividerColor),
+          border: Border.all(color: colors.dividerColor),
         ),
-        child: const Column(
+        child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(CupertinoIcons.heart_slash, size: 28, color: _textMuted),
-            SizedBox(height: 10),
+            Icon(CupertinoIcons.heart_slash, size: 28, color: colors.textMuted),
+            const SizedBox(height: 10),
             Text(
               'No favorite icons yet',
               style: TextStyle(
-                color: _textPrimary,
+                color: colors.textPrimary,
                 fontSize: 17,
                 fontWeight: FontWeight.w800,
               ),
             ),
-            SizedBox(height: 6),
+            const SizedBox(height: 6),
             Text(
               'Save icons from the main page and they will appear here.',
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: _textMuted,
+                color: colors.textMuted,
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
               ),

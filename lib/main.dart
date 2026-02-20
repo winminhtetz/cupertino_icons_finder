@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:ios_icon_finder/services/favorite_icons/models/fav_icon_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ios_icon_finder/src/global/theme/app_theme.dart';
+import 'package:ios_icon_finder/src/global/theme/theme_provider.dart';
 import 'package:ios_icon_finder/src/pages/mobile/home/home_page.dart';
 
 Future<void> main() async {
@@ -11,9 +13,8 @@ Future<void> main() async {
   Hive.registerAdapter(FavIconAdapter());
   await Hive.openBox<FavIcon>('favorite_icons');
   SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
+    const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark,
     ),
   );
   SystemChrome.setPreferredOrientations([
@@ -23,19 +24,18 @@ Future<void> main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeModeProvider);
     return MaterialApp(
       title: 'Ios Icon Finder',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: 'Gelion',
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
-      ),
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      themeMode: themeMode,
       home: const HomePage(),
     );
   }
